@@ -30,15 +30,15 @@ $(document).ready(function() {
         // //appending created elements to parent container
         $timeRow.append($timeDiv, $event, $submitBtn);  
     //     // comparing times in array to current time and applying styling accordingly
-        const endTime = moment();
+        const endTime = moment().format("LT");
         console.log(endTime);
-    //     if($event.attr().isBefore(endTime)){
-    //         $event.css('background-color', 'green')
-    //     }else if($today.format() === $timeDiv.text()){
-    //                 $event.css('background-color', 'red')
-    //     }else{
-    //         $event.css('background-color', 'gray').attr('readonly', true);
-    //     }  
+        if((value.moment).isBefore(endTime)){
+            $event.css('background-color', 'green')
+        }else if(date.format('ha') === $timeRow.text()){
+                    $event.css('background-color', 'red')
+        }else{
+            $event.css('background-color', 'gray').attr('readonly', true);
+        }  
     //     //local storage
     //     //setting the text for each time block
     //     function storeEvent() {
