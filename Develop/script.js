@@ -1,50 +1,59 @@
 $(document).ready(function() {
     const $today = $('#today')
     let date = moment();
+    $today.text(date.format('[current date and time >] MMMM Do YYYY, h:mm a'));
+    
 
-    const $timeBlocks = $('.timeblocks')
+    const $timeBlocks = $('.timeblocks');
 
-    $today.text(date.format('[current date and time >] MMMM Do YYYY, h:mm a'))
+    
 
-    const businessHours = ['8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm']
-    $.each(businessHours,function(key,value){
+    const businessHours = [{schedule : "8am", moment: "08:00,"},{schedule : "9am", moment: "09:00,"},{schedule : "10am", moment: "10:00,"},{schedule : "11am", moment: "11:00,"},{schedule : "12pm", moment: "12:00,"},{schedule : "1pm", moment: "13:00,"},{schedule : "2pm", moment: "14:00,"},{schedule : "3pm", moment: "15:00,"},{schedule : "4pm", moment: "16:00,"}];
+    console.log(businessHours);
+    
+        businessHours.forEach(function(value){
         //create html elements
-        const $timeRow = $('<div>').addClass('row')
-        $timeBlocks.append($timeRow)
+
+        console.log(value.schedule);
+        const $timeDiv = $('<div>').addClass('row');
+        const $timeRow = $('<div>').text(value.schedule).addClass('time');
+        $timeBlocks.append($timeDiv,$timeRow);
+
         
-        const $timeDiv = $('<div>').text(value).addClass('time') 
+
+        const $event = $('<textArea>').addClass('textarea');
+       
+        const $iconBtn = $('<i>').addClass('fa fa-save');
         
-        const $iconBtn = $('<i>').addClass('fa fa-save')
-        
-        const $event = $('<textArea>').addClass('textarea').attr('value', value)
-        
-        const $submitBtn = $('<button>').addClass('svBtn').append($iconBtn)
-        //appending created elements to parent container
-        $timeRow.append($timeDiv, $event, $submitBtn)  
-        // comparing times in array to current time and applying styling accordingly
-        const endTime = moment(value, "hA");
-        if($event.isBefore(endTime)){
-            $event.css('background-color', 'green')
-        }else if($today.format('hA') === $timeDiv.text()){
-                    $event.css('background-color', 'red')
-        }else{
-            $event.css('background-color', 'gray').attr('readonly', true)
-        }  
-        //local storage
-        //setting the text for each time block
-        function storeEvent() {
-            localStorage.setItem(value, $event.val());
-        }
-        //running the function when the save button is clicked
-        $submitBtn.on('click', function(){
-            storeEvent()
-         })
-         // retreiving events from local storage and rendering them to their correct time-blocks
-         function getEvent(){
-            const item = localStorage.getItem(value)
-            $event.text(item)
-        } 
-        getEvent()
+        const $submitBtn = $('<button>').addClass('svBtn').append($iconBtn);
+
+        // //appending created elements to parent container
+        $timeRow.append($timeDiv, $event, $submitBtn);  
+    //     // comparing times in array to current time and applying styling accordingly
+        const endTime = moment();
+        console.log(endTime);
+    //     if($event.attr().isBefore(endTime)){
+    //         $event.css('background-color', 'green')
+    //     }else if($today.format() === $timeDiv.text()){
+    //                 $event.css('background-color', 'red')
+    //     }else{
+    //         $event.css('background-color', 'gray').attr('readonly', true);
+    //     }  
+    //     //local storage
+    //     //setting the text for each time block
+    //     function storeEvent() {
+    //         localStorage.setItem(hour, $event.val());
+    //     }
+    //     //running the function when the save button is clicked
+    //     $submitBtn.on('click', function(){
+    //         storeEvent();
+    //      })
+    //      // retreiving events from local storage and rendering them to their correct time-blocks
+    //      function getEvent(){
+    //         const item = localStorage.getItem(hour)
+    //         $event.text(item);
+    //     } 
+    //     getEvent()
     })
 })
 
